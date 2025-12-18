@@ -26,6 +26,9 @@ body {
     cursor: none; /* Hide default cursor */
 }
 
+/* Ensure admin page has normal cursor behavior if needed, 
+   but since we use custom cursor everywhere, we just need to fix its performance */
+
 h1, h2, h3 {
     font-family: var(--font-heading);
     font-weight: 700;
@@ -51,9 +54,10 @@ a {
     background: rgba(255, 107, 53, 0.5);
     box-shadow: 0 0 20px 10px rgba(255, 107, 53, 0.3);
     pointer-events: none;
-    transform: translate(-50%, -50%);
-    transition: width 0.2s, height 0.2s;
     z-index: 10000;
+    will-change: transform;
+    /* We use transform instead of left/top for performance */
+    transform: translate3d(-50%, -50%, 0); 
 }
 
 /* Loader - Updated with SVG support */
@@ -489,4 +493,12 @@ footer {
     #strength-quote h2, #philosophy p {
         text-align: center;
     }
+}
+
+/* Admin Styles - Normalizing Cursor */
+.admin-page body {
+    cursor: auto !important;
+}
+.admin-page .cursor-glow {
+    display: none !important;
 }

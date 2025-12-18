@@ -6,7 +6,7 @@
     <title>Научись быть</title>
     <meta name="description" content="Курс по развитию осознанности и преодолению привычек.">
     <meta name="keywords" content="осознанность, саморазвитие, медитация, привычки">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
 </head>
@@ -14,10 +14,13 @@
     <div class="cursor-glow"></div>
 
     <div class="loader">
-        <div class="spinner"></div>
+        <!-- Replaced div with SVG for a crisp, scalable loader -->
+        <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+           <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+        </svg>
     </div>
 
-    <section id="hero" class="parallax" data-bg="img/1.jpg">
+    <section id="hero" class="parallax" data-bg="assets/img/1.jpg">
         <div class="hero-content">
             <p class="subtitle">Буддистскими монахами одобрено</p>
             <h1>Впервые в жизни: научись быть</h1>
@@ -52,7 +55,7 @@
         </div>
     </section>
 
-    <section id="strength-quote" class="parallax" data-bg="img/2.jpg">
+    <section id="strength-quote" class="parallax" data-bg="assets/img/2.jpg">
         <div class="strength-quote-content">
             <h2 class="reveal">Сила — это способность делать то, что ты делаешь, когда ты это делаешь</h2>
         </div>
@@ -79,7 +82,7 @@
         </div>
     </section>
 
-    <section id="philosophy" class="parallax" data-bg="img/3.jpg">
+    <section id="philosophy" class="parallax" data-bg="assets/img/3.jpg">
         <div class="philosophy-content">
             <p class="reveal">Это не медитация в классическом понимании. Это не эзотерика. Это курс про то, как быть свободным в своих проявлениях. <strong>Что вы получаете? — Свободу.</strong></p>
         </div>
@@ -127,7 +130,7 @@
         </div>
     </section>
 
-    <section id="contact" class="parallax" data-bg="img/5.jpg">
+    <section id="contact" class="parallax" data-bg="assets/img/5.jpg">
         <div class="contact-content">
             <h2 class="reveal">Проснуться</h2>
             <p class="reveal">Просто оставьте контакты</p>
@@ -149,6 +152,6 @@
         <p>Быть здесь и сейчас в Киеве | +38 067 536 43 41</p>
     </footer>
 
-    <script src="main.js?v=2"></script>
+    <script type="module" src="js/app.js"></script>
 </body>
 </html>

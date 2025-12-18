@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Test</title>
+</head>
+<body>
+    <h1>Firebase Connection Test</h1>
+    <button id="test-btn">Test Firebase Connection</button>
+    <div id="result"></div>
+
+    <script type="module">
+        import { collection, addDoc } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
+        import { db } from './src/js/firebase-config.js';
+
+        document.getElementById('test-btn').addEventListener('click', async () => {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Testing...';
+            
+            try {
+                const docRef = await addDoc(collection(db, 'test'), {
+                    message: 'Test connection',
+                    timestamp: new Date()
+                });
+                resultDiv.innerHTML = `✅ Success! Document ID: ${docRef.id}`;
+                resultDiv.style.color = 'green';
+            } catch (error) {
+                resultDiv.innerHTML = `❌ Error: ${error.message}`;
+                resultDiv.style.color = 'red';
+                console.error('Firebase error:', error);
+            }
+        });
+    </script>
+</body>
+</html>

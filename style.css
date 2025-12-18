@@ -113,10 +113,9 @@ a {
 #hero { min-height: 100vh; }
 #strength-quote { min-height: 60vh; }
 #philosophy { min-height: 70vh; }
-#gift { min-height: 80vh; }
 #contact { min-height: 100vh; }
 
-.hero-content, .strength-quote-content, .philosophy-content, .gift-content, .contact-content {
+.hero-content, .strength-quote-content, .philosophy-content, .offer-content, .contact-content {
     position: relative;
     z-index: 1;
     padding: 2rem;
@@ -322,7 +321,7 @@ a {
 /* Philosophy Section */
 #philosophy p { font-size: clamp(1.2rem, 2.5vw, 1.8rem); max-width: 800px; }
 
-/* Pricing Section */
+/* Gradient Section for Forms */
 .gradient-section {
     background: linear-gradient(135deg, var(--form-bg-start), var(--form-bg-end));
     padding: 6rem 2rem;
@@ -330,16 +329,17 @@ a {
     color: var(--text-light);
 }
 
-.gradient-section h2 { font-size: clamp(2rem, 4vw, 2.8rem); }
+.gradient-section h2 { font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: 1rem; }
+.gradient-section p { max-width: 600px; margin: 1rem auto 2rem; }
 
-#price-form, #contact-form {
+#offer-form, #contact-form {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
 }
 
-#price-form input, #contact-form input {
+#offer-form input, #contact-form input {
     padding: 1.2rem;
     border: 2px solid transparent;
     border-radius: 8px;
@@ -350,7 +350,8 @@ a {
     font-family: var(--font-body);
 }
 
-#price-form input:focus, #contact-form input:focus {
+#offer-form input:focus, #contact-form input:focus {
+    outline: none;
     transform: scale(1.05);
     box-shadow: 0 0 20px rgba(255,255,255,0.3);
     border-color: var(--primary-color-start);
@@ -367,8 +368,7 @@ a {
     75% { transform: translateX(5px); }
 }
 
-
-#price-form button, #contact-form button {
+#offer-form button, #contact-form button {
     padding: 1.2rem 2.5rem;
     background: var(--text-light);
     color: var(--form-bg-end);
@@ -380,19 +380,42 @@ a {
     font-weight: 700;
 }
 
-#price-form button:hover, #contact-form button:hover {
+#offer-form button:hover, #contact-form button:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
 
-/* Gift Section */
-#gift h2 { font-size: clamp(2.5rem, 5vw, 3.5rem); }
-#gift .orange-line {
-    width: 120px;
-    height: 6px;
-    background: var(--primary-color-start);
-    margin: 1.5rem auto;
-    border-radius: 3px;
+#form-feedback {
+    margin-top: 1rem;
+    font-weight: bold;
+    min-height: 24px;
+}
+
+/* Testimonials Section */
+.testimonial-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    margin-top: 5rem;
+}
+
+.testimonial-card {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    border-left: 5px solid var(--primary-color-start);
+    text-align: left;
+}
+
+.testimonial-card p {
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+.testimonial-card span {
+    font-weight: 700;
+    color: var(--primary-color-start);
 }
 
 /* Contact Form */

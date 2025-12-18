@@ -23,7 +23,7 @@
             <h1>Впервые в жизни: научись быть</h1>
             <p class="description">108 часов агонии и ты почувствуешь себя</p>
             <p class="dates">02.04 — 21.04</p>
-            <a href="#contact" class="cta-button">Забронировать бесплатный урок</a>
+            <a href="#get-offer" class="cta-button">Получить программу и подарок</a>
         </div>
     </section>
 
@@ -85,23 +85,37 @@
         </div>
     </section>
 
-    <section id="pricing" class="gradient-section">
-        <div class="pricing-content reveal">
-            <h2>И сколько это стоит?</h2>
-            <form id="price-form">
-                <input type="text" placeholder="Мы расскажем о ценах, но для начала, твой вариант" required>
-                <button type="submit">Отправить</button>
+    <section id="get-offer" class="gradient-section">
+        <div class="offer-content reveal">
+            <h2>Получите программу курса и книгу в подарок!</h2>
+            <p>Оставьте свой email, чтобы мы прислали вам подробную программу курса, информацию о ценах и нашу книгу об эмоциях в подарок.</p>
+            <form id="offer-form">
+                <input type="email" name="email" placeholder="Ваш Email" required>
+                <button type="submit">Получить</button>
             </form>
+            <p id="form-feedback"></p>
         </div>
     </section>
 
-    <section id="gift" class="parallax" data-bg="img/4.jpg">
-        <div class="gift-content">
-            <h2 class="reveal">Подарок</h2>
-            <div class="orange-line reveal"></div>
-            <p class="reveal">Каждый участник курса получит в подарок книгу об эмоциях.</p>
+    <section id="testimonials" class="light-section">
+        <h2 class="reveal">Что говорят участники</h2>
+        <div class="testimonial-cards">
+            <div class="testimonial-card reveal">
+                <p>"Этот курс перевернул мое представление о себе. Я наконец-то понял, чего хочу от жизни. Спасибо!"</p>
+                <span>— Алексей</span>
+            </div>
+            <div class="testimonial-card reveal">
+                <p>"Я стала гораздо спокойнее и осознаннее. Перестала суетиться по мелочам и научилась слушать себя."</p>
+                <span>— Мария</span>
+            </div>
+             <div class="testimonial-card reveal">
+                <p>"Скептически относился к подобным вещам, но результат превзошел все ожидания. Это действительно работает."
+</p>
+                <span>— Дмитрий</span>
+            </div>
         </div>
     </section>
+
 
     <section id="final-quote" class="light-section">
         <div class="quote-content reveal">
@@ -118,12 +132,12 @@
             <h2 class="reveal">Проснуться</h2>
             <p class="reveal">Просто оставьте контакты</p>
             <form id="contact-form" class="reveal">
-                <input type="email" name="email" placeholder="Почта" required>
-                <input type="tel" name="phone" placeholder="Телефон" required>
-                <input type="text" name="name" placeholder="Имя" required>
+                <input type="email" name="email" placeholder="Почта" required autocomplete="email">
+                <input type="tel" name="phone" placeholder="Телефон" required autocomplete="tel">
+                <input type="text" name="name" placeholder="Имя" required autocomplete="name">
                 <button type="submit">Отправить</button>
+                <p class="form-disclaimer reveal">Мы не передадим данные третьим лицам и не будем спамить.</p>
             </form>
-            <p class="form-disclaimer reveal">Мы не передадим данные третьим лицам и не будем спамить.</p>
             <div class="contact-info reveal">
                 <p>Быть здесь и сейчас в Киеве</p>
                 <p>+38 067 536 43 41</p>
@@ -135,6 +149,6 @@
         <p>Быть здесь и сейчас в Киеве | +38 067 536 43 41</p>
     </footer>
 
-    <script src="main.js"></script>
+    <script src="main.js?v=2"></script>
 </body>
 </html>

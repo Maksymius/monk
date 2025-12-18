@@ -143,6 +143,7 @@ a {
     justify-content: center;
     text-align: center;
     will-change: transform;
+    overflow: hidden;
 }
 
 .parallax::before {
@@ -158,6 +159,7 @@ a {
 #hero { min-height: 100vh; }
 #strength-quote { min-height: 60vh; }
 #philosophy { min-height: 70vh; }
+#gift { min-height: 80vh; }
 #contact { min-height: 100vh; }
 
 .hero-content, .strength-quote-content, .philosophy-content, .offer-content, .contact-content {
@@ -501,4 +503,42 @@ footer {
 }
 .admin-page .cursor-glow {
     display: none !important;
+}
+
+/* Gift Section */
+#gift {
+    min-height: 80vh;
+}
+
+#gift hr {
+    width: 100px;
+    margin: 2rem auto;
+    border: 2px solid var(--primary-color-start);
+    background: var(--primary-color-start);
+}
+
+#gift h2 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+/* Enhanced parallax content styling */
+.philosophy-content p {
+    font-size: 1.3rem;
+    line-height: 1.8;
+    max-width: 800px;
+    margin: 0 auto 2rem;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+
+    
+    #gift h2 {
+        font-size: 2.5rem;
+    }
+    
+    .philosophy-content p {
+        font-size: 1.1rem;
+    }
 }

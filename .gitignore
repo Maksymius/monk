@@ -1,6 +1,9 @@
 # Original version for comparison (ignore in commits)
 monk-main/
 
+# Archive folder with old documentation
+archive/
+
 # OS generated files
 .DS_Store
 .DS_Store?

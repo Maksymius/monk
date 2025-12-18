@@ -1,10 +1,5 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
-import { firebaseConfig } from '../firebase-config.js';
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+import { collection, addDoc } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
+import { db } from '../firebase-config.js';
 
 // --- Form Handling ---
 
@@ -13,13 +8,17 @@ async function handleFormSubmit(form, collectionName) {
     const data = Object.fromEntries(formData.entries());
     data.timestamp = new Date();
 
+    console.log('Attempting to submit form data:', data);
+    console.log('Collection name:', collectionName);
+    console.log('Database instance:', db);
+
     try {
         const docRef = await addDoc(collection(db, collectionName), data);
-        console.log("Document written with ID: ", docRef.id);
-        return true;
+        console.log("✅ Document written with ID: ", docRef.id);
+        return { success: true, id: docRef.id };
     } catch (e) {
-        console.error("Error adding document: ", e);
-        return false;
+        console.error("❌ Error adding document: ", e);
+        return { success: false, error: e.message };
     }
 }
 
@@ -35,15 +34,17 @@ export function initFormHandling() {
             submitButton.disabled = true;
             submitButton.textContent = 'Отправка...';
 
-            const success = await handleFormSubmit(offerForm, 'offer-requests');
+            const result = await handleFormSubmit(offerForm, 'offer-requests');
 
-            if (success) {
+            if (result.success) {
                 formFeedback.textContent = 'Спасибо! Информация скоро будет на вашей почте.';
                 formFeedback.style.color = 'green';
                 offerForm.reset();
+                console.log('✅ Offer form submitted successfully:', result.id);
             } else {
-                formFeedback.textContent = 'Ошибка отправки. Пожалуйста, попробуйте еще раз.';
+                formFeedback.textContent = `Ошибка отправки: ${result.error}`;
                 formFeedback.style.color = 'red';
+                console.error('❌ Offer form submission failed:', result.error);
             }
             
             submitButton.disabled = false;
@@ -60,13 +61,15 @@ export function initFormHandling() {
             submitButton.disabled = true;
             submitButton.textContent = 'Отправка...';
 
-            const success = await handleFormSubmit(contactForm, 'contact-requests');
+            const result = await handleFormSubmit(contactForm, 'contact-requests');
 
-            if (success) {
-                alert('Спасибо! Мы свяжемся с вами в ближайшее время.'); // Simple alert for now
+            if (result.success) {
+                alert('Спасибо! Мы свяжемся с вами в ближайшее время.');
                 contactForm.reset();
+                console.log('✅ Contact form submitted successfully:', result.id);
             } else {
-                alert('Произошла ошибка при отправке. Пожалуйста, попробуйте еще раз.');
+                alert(`Произошла ошибка при отправке: ${result.error}`);
+                console.error('❌ Contact form submission failed:', result.error);
             }
 
             submitButton.disabled = false;

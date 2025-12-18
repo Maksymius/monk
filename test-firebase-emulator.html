@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Emulator Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>🔥 Firebase Emulator Test</h1>
+    
+    <div class="info">
+        <strong>Инструкции:</strong><br>
+        1. Установите Firebase CLI: <code>npm install -g firebase-tools</code><br>
+        2. Запустите эмулятор: <code>firebase emulators:start</code><br>
+        3. Откройте эту страницу через эмулятор: <code>http://localhost:5000/test-firebase-emulator.html</code>
+    </div>
+
+    <div id="connection-status" class="status info">
+        Проверка подключения...
+    </div>
+
+    <button id="test-emulator">Test Emulator Connection</button>
+    <button id="test-production">Test Production Connection</button>
+    <button id="test-form-data">Test Form Data</button>
+
+    <div id="result"></div>
+
+    <h3>Logs:</h3>
+    <div id="logs" style="background: #f8f9fa; padding: 10px; border-radius: 5px; font-family: monospace; white-space: pre-wrap;"></div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
+        import { getFirestore, connectFirestoreEmulator, collection, addDoc, getDocs } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
+
+        const logs = document.getElementById('logs');
+        const resultDiv = document.getElementById('result');
+        const statusDiv = document.getElementById('connection-status');
+
+        function log(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            logs.textContent += `[${timestamp}] ${message}\n`;
+            console.log(message);
+        }
+
+        // Production config
+        const productionConfig = {
+            apiKey: "AIzaSyAcVsh17lLX9t2d1jF-8cDEzwRWh_w5WIY",
+            authDomain: "studio-8703515322-12e3a.firebaseapp.com",
+            projectId: "studio-8703515322-12e3a",
+            storageBucket: "studio-8703515322-12e3a.firebasestorage.app",
+            messagingSenderId: "740569486932",
+            appId: "1:740569486932:web:8de1c9dbf45c69502effc1"
+        };
+
+        // Emulator config
+        const emulatorConfig = {
+            apiKey: "demo-project",
+            authDomain: "demo-project.firebaseapp.com",
+            projectId: "demo-project",
+            storageBucket: "demo-project.appspot.com",
+            messagingSenderId: "000000000000",
+            appId: "1:000000000000:web:0000000000000000000000"
+        };
+
+        let currentDb = null;
+
+        // Check if emulator is running
+        async function checkEmulator() {
+            try {
+                const response = await fetch('http://localhost:4000');
+                if (response.ok) {
+                    statusDiv.className = 'status success';
+                    statusDiv.innerHTML = '✅ Firebase Emulator UI доступен на http://localhost:4000';
+                    return true;
+                }
+            } catch (error) {
+                statusDiv.className = 'status error';
+                statusDiv.innerHTML = '❌ Firebase Emulator не запущен. Запустите: <code>firebase emulators:start</code>';
+                return false;
+            }
+        }
+
+        // Test emulator connection
+        document.getElementById('test-emulator').addEventListener('click', async () => {
+            log('🧪 Testing emulator connection...');
+            
+            try {
+                const app = initializeApp(emulatorConfig, 'emulator-app');
+                const db = getFirestore(app);
+                
+                // Connect to emulator
+                connectFirestoreEmulator(db, 'localhost', 8080);
+                currentDb = db;
+                
+                const testData = {
+                    message: 'Test from emulator',
+                    timestamp: new Date(),
+                    type: 'emulator-test'
+                };
+                
+                const docRef = await addDoc(collection(db, 'test'), testData);
+                log(`✅ Emulator test successful! Doc ID: ${docRef.id}`);
+                
+                resultDiv.innerHTML = '<div class="status success">✅ Emulator connection working!</div>';
+            } catch (error) {
+                log(`❌ Emulator test failed: ${error.message}`);
+                resultDiv.innerHTML = `<div class="status error">❌ Emulator error: ${error.message}</div>`;
+            }
+        });
+
+        // Test production connection
+        document.getElementById('test-production').addEventListener('click', async () => {
+            log('🌐 Testing production connection...');
+            
+            try {
+                const app = initializeApp(productionConfig, 'production-app');
+                const db = getFirestore(app);
+                currentDb = db;
+                
+                const testData = {
+                    message: 'Test from production',
+                    timestamp: new Date(),
+                    type: 'production-test'
+                };
+                
+                const docRef = await addDoc(collection(db, 'test'), testData);
+                log(`✅ Production test successful! Doc ID: ${docRef.id}`);
+                
+                resultDiv.innerHTML = '<div class="status success">✅ Production connection working!</div>';
+            } catch (error) {
+                log(`❌ Production test failed: ${error.message}`);
+                resultDiv.innerHTML = `<div class="status error">❌ Production error: ${error.message}</div>`;
+            }
+        });
+
+        // Test form data
+        document.getElementById('test-form-data').addEventListener('click', async () => {
+            if (!currentDb) {
+                resultDiv.innerHTML = '<div class="status error">❌ Сначала подключитесь к базе данных</div>';
+                return;
+            }
+
+            log('📝 Testing form data submission...');
+            
+            try {
+                // Test offer form data
+                const offerData = {
+                    email: 'test@example.com',
+                    timestamp: new Date(),
+                    type: 'offer-request'
+                };
+                
+                const offerRef = await addDoc(collection(currentDb, 'offer-requests'), offerData);
+                log(`✅ Offer form test successful! Doc ID: ${offerRef.id}`);
+                
+                // Test contact form data
+                const contactData = {
+                    email: 'contact@example.com',
+                    phone: '+380123456789',
+                    name: 'Test User',
+                    timestamp: new Date(),
+                    type: 'contact-request'
+                };
+                
+                const contactRef = await addDoc(collection(currentDb, 'contact-requests'), contactData);
+                log(`✅ Contact form test successful! Doc ID: ${contactRef.id}`);
+                
+                resultDiv.innerHTML = '<div class="status success">✅ Form data tests successful!</div>';
+            } catch (error) {
+                log(`❌ Form data test failed: ${error.message}`);
+                resultDiv.innerHTML = `<div class="status error">❌ Form data error: ${error.message}</div>`;
+            }
+        });
+
+        // Initial check
+        checkEmulator();
+    </script>
+</body>
+</html>

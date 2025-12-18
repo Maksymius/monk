@@ -1,0 +1,22 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Разрешить чтение и запись для коллекций форм
+    match /offer-requests/{document} {
+      allow read, write: if true;
+    }
+    
+    match /contact-requests/{document} {
+      allow read, write: if true;
+    }
+    
+    match /test/{document} {
+      allow read, write: if true;
+    }
+    
+    // Для всех остальных документов - запретить доступ
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

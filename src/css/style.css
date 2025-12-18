@@ -1,0 +1,39 @@
+/* Обновленные стили для прелоадера с SVG */
+.spinner {
+    animation: rotator 1.4s linear infinite;
+}
+
+@keyframes rotator {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(270deg); }
+}
+
+.path {
+    stroke-dasharray: 187;
+    stroke-dashoffset: 0;
+    transform-origin: center;
+    stroke: var(--primary-color-start);
+    animation:
+        dash 1.4s ease-in-out infinite, 
+        colors 5.6s ease-in-out infinite; /* 1.4s * 4 */
+}
+
+@keyframes colors {
+    0% { stroke: var(--primary-color-start); }
+    25% { stroke: var(--primary-color-end); }
+    50% { stroke: var(--form-bg-start); }
+    75% { stroke: var(--form-bg-end); }
+    100% { stroke: var(--primary-color-start); }
+}
+
+@keyframes dash {
+    0% { stroke-dashoffset: 187; }
+    50% { 
+        stroke-dashoffset: 46; /* 187 / 4 */
+        transform: rotate(135deg);
+    }
+    100% { 
+        stroke-dashoffset: 187;
+        transform: rotate(450deg);
+    }
+}
